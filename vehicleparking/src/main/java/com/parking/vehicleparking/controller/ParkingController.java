@@ -22,7 +22,10 @@ public class ParkingController {
 
     @GetMapping("/")
     public String welcomeMessage(){
-        return "Welcome to our parking area";
+        return "Welcome to our parking area \n1. allinfo: vehicle/allinfo?vehicletype=CAR" +
+                "\n2. parking: vehicle/parking/{json}" +
+                "\n3. info: vehicle/info/slotno" +
+                "\n4. unparking: vehicle/unparking/slotno";
     }
 
     @GetMapping("/allinfo")
