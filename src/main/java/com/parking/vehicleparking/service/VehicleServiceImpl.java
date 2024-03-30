@@ -22,6 +22,15 @@ public class VehicleServiceImpl implements VehicleService {
     private final int carCapacity = 5;
 
     private int bikeFilled = 0;
+
+    public int getBikeFilled() {
+        return bikeFilled;
+    }
+
+    public int getCarFilled() {
+        return carFilled;
+    }
+
     private int carFilled = 0;
 
     @Autowired
@@ -34,11 +43,6 @@ public class VehicleServiceImpl implements VehicleService {
 
         bikeFilled = vehicleRepository.findByVehicleType(VehicleType.BIKE.name()).size();
         carFilled = vehicleRepository.findByVehicleType(VehicleType.CAR.name()).size();
-
-        RestTemplate restTemplate = new RestTemplate();
-
-        ResponseEntity<String> res = restTemplate.getForEntity("https://google.com",String.class);
-        log.info("Response: "+res.getBody());
 
         if (VehicleType.BIKE.name().equals(vehicle.getVehicleType())) {
             if (bikeFilled >= bikeCapacity) {
@@ -85,6 +89,8 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public Vehicle unParking(String slotNo) {
         Vehicle vehicle = getVehicle(slotNo);
+        bikeFilled = vehicleRepository.findByVehicleType(VehicleType.BIKE.name()).size();
+        carFilled = vehicleRepository.findByVehicleType(VehicleType.CAR.name()).size();
         if(vehicle.getVehicleType().equals(VehicleType.BIKE.name())){
             bikeFilled--;
         }
